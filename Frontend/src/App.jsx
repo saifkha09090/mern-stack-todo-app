@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Trash2, CheckCircle, Circle, Loader2, Plus, Edit, Save, X } from 'lucide-react';
-const API_URL = `${import.meta.env.REACT_APP_API_URL}/api/todos`;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Toast = ({ message, type, onClose }) => {
   const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
@@ -108,12 +108,17 @@ const App = () => {
     setLoading(true);
     try {
       const res = await axios.get(API_URL);
-      console.log(res.data);
-      
-      setTodos(res.data);
+      if (Array.isArray(res.data)) {
+          setTodos(res.data);
+      } else {
+          console.error("API response was not an array:", res.data);
+          setToast({ message: 'API se ghalat data mila.', type: 'error' });
+          setTodos([]); 
+      }
     } catch (error) {
       setToast({ message: 'Todos fetch nahi hue! Server check karein.', type: 'error' });
       console.error('Fetch Error:', error);
+      setTodos([]);
     } finally {
       setLoading(false);
     }
