@@ -112,11 +112,11 @@ const App = () => {
           setTodos(res.data);
       } else {
           console.error("API response was not an array:", res.data);
-          setToast({ message: 'API se ghalat data mila.', type: 'error' });
+          setToast({ message: 'API response incorrect', type: 'error' });
           setTodos([]); 
       }
     } catch (error) {
-      setToast({ message: 'Todos fetch nahi hue! Server check karein.', type: 'error' });
+      setToast({ message: 'Todos fetch unsuccessful.', type: 'error' });
       console.error('Fetch Error:', error);
       setTodos([]);
     } finally {
@@ -127,7 +127,7 @@ const App = () => {
   const addTodo = async (e) => {
     e.preventDefault();
     if (newTodoText.trim() === '') {
-      setToast({ message: 'Pehle kuch likhein to!', type: 'error' });
+      setToast({ message: 'Text required', type: 'error' });
       return;
     }
     
@@ -135,9 +135,9 @@ const App = () => {
       const res = await axios.post(API_URL, { text: newTodoText.trim() });
       setTodos([res.data, ...todos]); 
       setNewTodoText('');
-      setToast({ message: 'Naya Todo add ho gaya!', type: 'success' });
+      setToast({ message: 'Todo added successfully!', type: 'success' });
     } catch (error) {
-      setToast({ message: 'Todo add nahi hua.', type: 'error' });
+      setToast({ message: 'Todo is not added.', type: 'error' });
       console.error('Add Error:', error);
     }
   };
@@ -150,9 +150,9 @@ const App = () => {
         todo._id === id ? res.data : todo
       ));
       
-      setToast({ message: isCompleted ? 'Task complete! 🎉' : 'Task incomplete kia.', type: 'success' });
+      setToast({ message: isCompleted ? 'Task complete! 🎉' : 'Task incomplete!', type: 'success' });
     } catch (error) {
-      setToast({ message: 'Update nahi hua.', type: 'error' });
+      setToast({ message: 'Update unsuccessful.', type: 'error' });
       console.error('Update Error:', error);
     }
   };
@@ -162,9 +162,9 @@ const App = () => {
       await axios.delete(`${API_URL}/${id}`); 
       
       setTodos(todos.filter(todo => todo._id !== id));
-      setToast({ message: 'Todo delete ho gaya.', type: 'success' });
+      setToast({ message: 'Todo deleted successfully!', type: 'success' });
     } catch (error) {
-      setToast({ message: 'Delete nahi hua.', type: 'error' });
+      setToast({ message: 'Delete unsuccessful.', type: 'error' });
       console.error('Delete Error:', error);
     }
   };
@@ -181,7 +181,7 @@ const App = () => {
   
  const saveEdit = async (id) => {
       if (editText.trim() === '') {
-          setToast({ message: 'Text khali nahi chhod sakte!', type: 'error' });
+          setToast({ message: 'Text required', type: 'error' });
           return;
       }
       
@@ -194,9 +194,9 @@ const App = () => {
           
           setEditingId(null);
           setEditText('');
-          setToast({ message: 'Todo edit ho gaya!', type: 'success' });
+          setToast({ message: 'Todo edited successfully!', type: 'success' });
       } catch (error) {
-          setToast({ message: 'Edit save nahi hua. Server ne data reject kiya (400).', type: 'error' });
+          setToast({ message: 'Edit unsuccessful. Server rejected data (400).', type: 'error' });
           console.error('Save Edit Error:', error);
           
           setEditingId(null); 
