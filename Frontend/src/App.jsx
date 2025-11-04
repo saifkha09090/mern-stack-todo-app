@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Trash2, CheckCircle, Circle, Loader2, Plus, Edit, Save, X } from 'lucide-react';
-const API_URL = import.meta.env.REACT_APP_API_URL || 'http://localhost:5000/api/todos';
+const API_URL = `${import.meta.env.REACT_APP_API_URL}/api/todos`;
 
 const Toast = ({ message, type, onClose }) => {
   const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
@@ -108,6 +108,8 @@ const App = () => {
     setLoading(true);
     try {
       const res = await axios.get(API_URL);
+      console.log(res.data);
+      
       setTodos(res.data);
     } catch (error) {
       setToast({ message: 'Todos fetch nahi hue! Server check karein.', type: 'error' });

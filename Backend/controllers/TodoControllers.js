@@ -13,7 +13,7 @@ const addTodo = async (req, res) => {
   const { text } = req.body;
   
   if (!text) {
-    return res.status(400).json({ message: 'Todo ka text missing hai' });
+    return res.status(400).json([]);
   }
 
   try {
