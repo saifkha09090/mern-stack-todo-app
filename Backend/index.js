@@ -7,7 +7,7 @@ import todoRoutes from './routes/todoRoutes.js';
 
 dotenv.config();
 
-const allowedOrigin = process.env.CLIENT_URL || 'http://localhost:5173'; 
+const allowedOrigin = process.env.CLIENT_URL; 
 
 const corsOptions = {
     origin: allowedOrigin,
